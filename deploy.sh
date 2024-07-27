@@ -7,11 +7,15 @@ set -e
 sudo apt update
 sudo apt install -y python3-pip python3-venv nodejs npm nginx git
 
-# Clone the repository
+# Define the repository directory
 REPO_DIR="/home/ubuntu/fullstackreactapp"
+
+# Remove the repository directory if it already exists
 if [ -d "$REPO_DIR" ]; then
-    rm -rf "$REPO_DIR"
+    sudo rm -rf "$REPO_DIR"
 fi
+
+# Clone the repository
 git clone https://github.com/Rehman-AD/fullstackreactapp.git "$REPO_DIR"
 
 # Navigate to the backend directory and set up the Django application
@@ -19,6 +23,11 @@ cd "$REPO_DIR/backend"
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
+
+# Create the staticfiles directory if it doesn't exist
+mkdir -p /home/ubuntu/fullstackreactapp/backend/staticfiles
+
+# Run migrations and collect static files
 python manage.py migrate
 python manage.py collectstatic --noinput
 
