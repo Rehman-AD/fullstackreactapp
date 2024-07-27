@@ -3,10 +3,10 @@ name: CI Pipeline for Backend
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   setup_backend:
